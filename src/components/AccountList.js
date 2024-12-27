@@ -12,7 +12,7 @@ const AccountList = () => {
     const [accounts, setAccounts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchText, setSearchText] = useState('');
-   // const userInfo = JSON.parse(localStorage.getItem('userinfo'));
+   
     const navigate = useNavigate();
 
     const data = {

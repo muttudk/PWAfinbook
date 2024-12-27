@@ -24,18 +24,7 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
 
   useEffect(() => {
     if (isVisible) {
-      // Fetch options from API when modal is opened
-      // fetch(`https://finbook.softsolin.com/api/get_accountmast.php?shop_id=${userInfo.shop_id}`) // Replace with your actual API endpoint
-      //   .then(response => response.json())
-      //   .then(data => {
-      //     setOptions(data); // Adjust based on your API response structure
-      //     setLoading(false);
-      //   })
-      //   .catch(error => {
-      //     console.error('Error fetching accounts:', error);
-      //     setLoading(false);
-      //   });
-      fetchData();
+       fetchData();
     }
   }, [isVisible]);
 

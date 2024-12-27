@@ -20,34 +20,13 @@ const Collection = () => {
     const [loading, setLoading] = useState(true);
     const [searchText, setSearchText] = useState('');
     const { isVisible, modalData, modalMode, openModal, closeModal } = useModal();
-    //const userInfo = JSON.parse(localStorage.getItem('userinfo'));
+  
     const navigate = useNavigate();
 
 
-    // const fetch_custacmast = () => { 
     
-    //     fetch(`https://finbook.softsolin.com/api/get_custacmast.php?shop_id=${userInfo.shop_id}`) 
-    // .then(response => response.json())
-    // .then(data => {
-    //     setAccounts(data);
-    //     setLoading(false);
-    // })
-    // .catch(error => {
-    //     console.error('Error fetching account data:', error);
-    //     setLoading(false);
-    // });
-    // };
     
-    // const fetch_accountmast = () => { fetch(`https://finbook.softsolin.com/api/get_accountmast.php?shop_id=${userInfo.shop_id}`) 
-    // .then(response => response.json())
-    // .then(data => {
-    //     setoptions(data);  
-    // })
-    // .catch(error => {
-    //     console.error('Error fetching account data:', error);
-    // });
-    // };
-
+   
 
 const data = {
         apikey: "getMemberacs",
@@ -64,9 +43,9 @@ const data = {
         }
       };
     useEffect(() => {
-       // fetch_custacmast();
+      
          fetchData();
-       // fetch_accountmast();
+       
     },[]);
     
    
@@ -113,17 +92,18 @@ const data = {
       e.preventDefault(); 
       const formData = new FormData(e.target); 
       const data1 = { 
+        voucher_type :"4",
         voucher_id: null,
         voucher_name:"CRVCH",
         othac_code:formData.get('othac_code'),
         voucher_amount:formData.get('voucher_amount'),
         voucher_no: formData.get('voucher_no'),  
         voucher_note: formData.get('voucher_note'),
-        voucher_time:getCurrentTimeFormatted(),  
+       // voucher_time:getCurrentTimeFormatted(),  
         voucher_othac_cd: "",
         voucher_ac_id:formData.get('voucher_ac_id'),
         voucher_date: formatDate(formData.get('voucher_date')), 
-        shop_id:userInfo.shop_id,
+       // shop_id:userInfo.shop_id,
     };
    
     

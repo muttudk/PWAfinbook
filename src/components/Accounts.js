@@ -13,7 +13,7 @@ const Accounts = () => {
     const [searchText, setSearchText] = useState('');
 
     const { isVisible, modalData, modalMode, openModal, closeModal } = useModal();
- //   const userInfo = JSON.parse(localStorage.getItem('userinfo'));
+
     
     const data = {
         apikey: "getMemberacs",

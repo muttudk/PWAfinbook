@@ -15,7 +15,7 @@ const LedgerAccount = () => {
   const [loading, setLoading] = useState(true);
   const [accounts, setAccounts] = useState([]);
   const { isVisible, modalData, modalMode, openModal, closeModal } = useModal();
-  //const userInfo = JSON.parse(localStorage.getItem('userinfo'));
+
 
    const data = {
      apikey: "getGenledger",

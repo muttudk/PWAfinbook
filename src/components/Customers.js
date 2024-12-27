@@ -23,7 +23,7 @@ const Customers = () => {
     customer_email: ''
   });
 
- // const userInfo = JSON.parse(localStorage.getItem('userinfo'));
+
   
   const data = {
     apikey: "getCustomer",
