@@ -1,0 +1,20 @@
+/* LedgerAccount.css */
+.ledger-account-container {
+    margin-top: 20px;
+  }
+  
+  .loading-spinner {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 18px;
+    color: #007bff;
+  }
+  
+  .table th, .table td {
+    text-align: center;
+  }
+  
+  .ledger-header{
+    display: flex;
+    justify-content: space-between;
+  }

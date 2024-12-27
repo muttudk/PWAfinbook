@@ -1,0 +1,32 @@
+
+.accounts-container {
+    margin-top: 20px;
+    display: grid;
+  }
+ 
+  .card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .customer-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+  
+  .customer-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .customer-card .card-title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .customer-card .card-text {
+    font-size: 14px;
+    color: #007bff;
+  }
+  

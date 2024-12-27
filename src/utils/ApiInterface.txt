@@ -1,0 +1,467 @@
+
+
+
+
+if (custacmastdata.getAccount_type().equals("L")) {
+                        if (Amount.getText().toString().isEmpty()) {
+                            Toasty.error(AgentAccountsActivity.this, "Enter Valid Amount").show();
+                        } else if (custacmastdata.getClbal() == null) {
+                            Toasty.error(AgentAccountsActivity.this, "Loan not given").show();
+                        } else if (validreceipt == true) {
+                            AddVoucher("0", saccount, Double.parseDouble(Amount.getText().toString()), "", note.getText().toString(), date.getText().toString(), currentTime, "", custacmastdata.getAccount_id(), "1", saccountid, shopID);
+                            } else {
+                            Toasty.error(AgentAccountsActivity.this, "Can't Collect more than loan Amount").show();
+                        }
+                    } else {
+                        if (Amount.getText().toString().isEmpty()) {
+                            Toasty.error(AgentAccountsActivity.this, "Enter Valid Amount").show();
+                        } else {
+                            AddVoucher("0", saccount, Double.parseDouble(Amount.getText().toString()), "", note.getText().toString(), date.getText().toString(), currentTime, "", custacmastdata.getAccount_id(), "1", saccountid, shopID);
+                        }
+                    }
+
+
+
+
+
+{
+    "apikey": "updateVoucher",
+    "token": "5ece4797eaf5e44779648-b6d1-11ef-bf55-f4393e8d0a8a",
+    "data": {
+        "voucher_id": null,
+        "voucher_type": "4",
+        "voucher_name": "CRVCH",
+        "voucher_ac_id": "67387476614cc",
+        "othac_code": "Cash",
+        "voucher_othac_cd": "",
+        "voucher_date": "26-12-2024",
+        "voucher_no": "",
+        "voucher_amount": "300",
+        "voucher_note": ""
+    }
+}
+
+
+
+
+
+
+
+public interface ApiInterface {
+
+    //for login
+    @FormUrlEncoded
+    @POST("login.php")
+    Call<Login> login(
+            @Field(Constant.KEY_EMAIL) String email,
+            @Field(Constant.KEY_PASSWORD) String password,
+            @Field("deviceid") String deviceid,
+            @Field("appversion") String appversion);
+
+
+    @FormUrlEncoded
+    @POST("voucher_lock.php")
+    Call<voucherlock> voucherlock(
+            @Field(Constant.SP_Login_code) String login_code ,
+            @Field(Constant.SHOP_ID) String shop_id,
+            @Field("ason") String ason,
+            @Field("fdate") String fdate,
+            @Field("tdate") String tdate,
+            @Field("id") String id,
+            @Field("locked") String locked
+
+    );
+
+    @FormUrlEncoded
+    @POST("add_firm.php")
+    Call<firm> firmregister(
+            @Field("owner_name") String owner_name,
+            @Field("shop_name") String shop_name,
+            @Field("shop_contact") String shop_contact,
+            @Field("shop_email") String shop_email,
+            @Field("shop_address") String shop_address,
+            @Field("password") String password
+
+    );
+    //calling json array , need list
+    @POST("orders_submit.php")
+    Call<String> submitOrders(
+            @Body RequestBody ordersData
+    );
+    @GET("cabsbycode.php")
+    Call<List<cabsmodel>> getaccounts(
+            @Query("compcode") String compcode,
+            @Query("custcode") String custcode
+    );
+    @GET("get_account_type.php")
+    Call<List<accounttypemodel>> getaccount_type_old(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SEARCH_TEXT) String searchText,
+            @Query(Constant.SHOP_ID) String shopId,
+            @Query(Constant.SP_OWNER_ID) String ownerId
+    );
+
+    @GET("get_loanbalrep.php")
+    Call<List<report>> getreport(
+            @Query(Constant.SHOP_ID) String shopId,
+            @Query("ason") String ason
+    );
+
+    @GET("get_reportmast.php")
+    Call<List<report>> getreportmaster(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SHOP_ID) String shopId
+    );
+
+
+    @GET("get_cacbalbook.php")
+    Call<List<report>> getcacbalbookftdate(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SHOP_ID) String shopId,
+            @Query("ac_type") String actype,
+            @Query("fdate") String fdate,
+            @Query("tdate") String todate
+    );
+    @GET("get_cacbalbook.php")
+    Call<List<report>> getcacbalbookason(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SHOP_ID) String shopId,
+            @Query("ac_type") String actype,
+            @Query("ason") String fdate
+    );
+    @GET("get_pnlv.php")
+    Call<List<report>> getpnlvreport(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SHOP_ID) String shopId,
+            @Query("fdate") String fdate,
+            @Query("tdate") String todate
+    );
+    @GET("get_rcptpymnt.php")
+    Call<List<report>> getrcptpmnt(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SHOP_ID) String shopId,
+            @Query("fdate") String fdate,
+            @Query("tdate") String todate
+    );
+    @GET("get_account_type.php")
+    Call<List<accounttypemodel>> getaccount_type();
+    //get customers data
+
+
+    @GET("get_customer.php")
+    Call<List<Customer>> getCustomers(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SEARCH_TEXT) String searchText,
+            @Query(Constant.SP_SHOP_ID) String shopId,
+            @Query(Constant.SP_OWNER_ID) String ownerId
+    );
+
+    //get customers data
+    @GET("get_products.php")
+    Call<List<Product>> getProducts(
+            @Query(Constant.SEARCH_TEXT) String searchText,
+            @Query(Constant.SHOP_ID) String shopId,
+            @Query(Constant.SP_OWNER_ID) String ownerId
+
+    );
+
+
+    //get product data
+    @GET("get_product_by_id.php")
+    Call<List<Product>> getProductById(
+            @Query(Constant.PRODUCT_ID) String productId,
+            @Query(Constant.SHOP_ID) String shopId
+
+    );
+
+    //get order data
+    @GET("shop_information.php")
+    Call<List<ShopInformation>> shopInformation(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SHOP_ID) String shopId
+
+    );
+
+    // get leadger_master
+    @GET("get_accountmast.php")
+    Call<List<AccountMaster>> getaccountmaster(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SP_SHOP_ID) String shopId,
+            @Query(Constant.SP_OWNER_ID) String ownerId,
+            @Query(Constant.SEARCH_TEXT) String searchText
+    );
+
+    @FormUrlEncoded
+    @POST("add_accountmast.php")
+    Call<AccountMaster> addaccountmaster(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field("account_code") String account_code,
+            @Field("ac_group_cd") String ac_group_cd,
+            @Field("account_desc") String account_desc,
+            @Field(Constant.SP_SHOP_ID) String shopId
+   );
+
+    @FormUrlEncoded
+    @POST("delete_accountmast.php")
+    Call<AccountMaster> deleteaccountmaster(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field("account_id") String account_code,
+            @Field("shop_id") String shopId
+    );
+
+    @FormUrlEncoded
+    @POST("update_accountmast.php")
+    Call<AccountMaster> updateaccountmaster(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field("account_id") String account_id,
+            @Field("account_code") String account_code,
+            @Field("ac_group_cd") String ac_group_cd,
+            @Field("account_desc") String account_desc,
+            @Field(Constant.SP_SHOP_ID) String shopId
+    );
+
+
+    @GET("get_account_group.php")
+    Call<List<AccountGroup>> getaccountgroup();
+
+
+    //for product data
+    @GET("search_product.php")
+    Call<List<Product>> searchProductByCategory(
+            @Query(Constant.KEY_CATEGORY_ID) String categoryId,
+            @Query(Constant.SP_SHOP_ID) String shopId
+    );
+    @GET("get_custacmast.php")
+    Call<List<CustAcMaster>> getcustacconts(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SP_SHOP_ID) String shopId,
+            @Query("customer_id") String customer_id
+    );
+
+    //add customer data to server
+    @FormUrlEncoded
+    @POST("add_customer.php")
+    Call<Customer> addCustomers(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field(Constant.CUSTOMER_NAME) String name,
+            @Field(Constant.CUSTOMER_CELL) String cell,
+            @Field(Constant.CUSTOMER_EMAIL) String email,
+            @Field(Constant.CUSTOMER_ADDRESS) String address,
+            @Field(Constant.SP_SHOP_ID) String shopId,
+            @Field(Constant.SP_OWNER_ID) String ownerId);
+
+
+    @FormUrlEncoded
+    @POST("add_voucher.php")
+    Call<VoucherMaster> addvouchermaster(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field("voucher_type") String vtype,
+            @Field("voucher_name") String vname,
+            @Field("voucher_amount") double vamount,
+            @Field("voucher_no") String voucherno,
+            @Field("voucher_note") String vnote,
+            @Field("voucher_date") String vdate,
+            @Field("voucher_time") String voucher_time,
+            @Field("ac_id_custac") String ac_id_custac,
+            @Field("voucher_ac_id") String vacid,
+            @Field("voucher_drorcr") String vdrorcr,
+            @Field("voucher_othac_cd") String vothac_cd,
+            @Field(Constant.SHOP_ID) String shop_id);
+
+
+    @FormUrlEncoded
+    @POST("update_voucher.php")
+    Call<VoucherMaster> Updatevoucher(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field("voucher_id") String voucher_id,
+            @Field("voucher_type") String vtype,
+            @Field("voucher_name") String vname,
+            @Field("voucher_amount") double vamount,
+            @Field("voucher_no") String voucherno,
+            @Field("voucher_note") String vnote,
+            @Field("voucher_date") String vdate,
+            @Field("voucher_time") String voucher_time,
+            @Field("ac_id_custac") String ac_id_custac,
+            @Field("voucher_othac_cd") String vothac_cd,
+            @Field("voucher_ac_id") String vacid,
+            @Field(Constant.SHOP_ID) String shop_id);
+
+
+            
+    @FormUrlEncoded
+    @POST("add_custacmast.php")
+    Call<CustAcMaster> addCustomerAcMaster(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field("account_type_id") String actypeid,
+            @Field("open_date") String opendate,
+            @Field("customer_id") String customerid,
+            @Field("rateofins") String rateofins,
+            @Field("no_of_emi") String noofemi,
+            @Field("periodtyp") String periodtyp,
+            @Field("emimode") String emimode,
+            @Field("remarks") String remarks,
+            @Field("maturity_date") String maturitydate,
+            @Field("isactive") String isactive,
+            @Field(Constant.SP_SHOP_ID) String shopId,
+            @Field(Constant.SP_OWNER_ID) String ownerId);
+    @GET("get_custacmast.php")
+    Call<List<CustAcMaster>> getCustomerAcMaster(
+            @Query(Constant.SP_Login_code) String login_code,
+             @Query(Constant.SHOP_ID) String shopId,
+             @Query("account_type_id") String actypeid,
+             @Query(Constant.SEARCH_TEXT) String searchText);
+
+
+    @GET("get_custacmast.php")
+    Call<List<CustAcMaster>> getAccountMastersearchresult(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SHOP_ID) String shopId,
+            @Query(Constant.SEARCH_TEXT) String searchText);
+
+
+    @GET("get_genldg.php")
+    Call<List<VoucherMaster>> getVouchers(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SHOP_ID) String shopId,
+            @Query("account_id") String account_id,
+    @Query("fdate") String fdate,
+    @Query("tdate") String todate);
+
+    @GET("dashboard.php")
+    Call<List<dashboard>>getdashboard(
+            @Query(Constant.SP_Login_code) String login_code,
+            @Query(Constant.SHOP_ID) String shopId);
+            
+    @FormUrlEncoded
+    @POST("update_custacmast.php")
+    Call<CustAcMaster> updateCustomerAcMaster(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field("account_id") String account_id,
+            @Field("account_type_id") String actypeid,
+            @Field("open_date") String opendate,
+            @Field("customer_id") String customerid,
+            @Field("rateofins") String rateofins,
+            @Field("no_of_emi") String noofemi,
+            @Field("periodtyp") String periodtyp,
+            @Field("emimode") String emimode,
+            @Field("remarks") String remarks,
+            @Field("maturity_date") String maturitydate,
+            @Field("isactive") String isactive,
+            @Field(Constant.SP_SHOP_ID) String shopId,
+            @Field(Constant.SP_OWNER_ID) String ownerId);
+
+
+
+    //update customer data to server
+    @FormUrlEncoded
+    @POST("update_customer.php")
+    Call<Customer> updateCustomers(
+            @Field(Constant.SP_Login_code) String logincode,
+            @Field(Constant.CUSTOMER_ID) String id,
+            @Field(Constant.CUSTOMER_NAME) String name,
+            @Field(Constant.CUSTOMER_CELL) String cell,
+            @Field(Constant.CUSTOMER_EMAIL) String email,
+            @Field(Constant.CUSTOMER_ADDRESS) String address);
+
+
+    //delete customer
+    @FormUrlEncoded
+    @POST("delete_customer.php")
+    Call<Customer> deleteCustomer(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field(Constant.CUSTOMER_ID) String customerId,
+            @Field(Constant.SP_SHOP_ID) String shopId
+    );
+
+    @FormUrlEncoded
+    @POST("delete_custacmast.php")
+    Call<CustAcMaster> deleteCustomeraccount(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field("account_id") String customerId,
+             @Field(Constant.SP_SHOP_ID) String shopId
+    );
+
+
+    @FormUrlEncoded
+    @POST("deactive_custacmast.php")
+    Call<CustAcMaster> deactiveCustomeraccount(
+            @Field(Constant.SP_Login_code) String login_code,
+            @Field("account_id") String account_id,
+            @Field(Constant.SP_SHOP_ID) String shopId
+    );
+
+
+
+    //delete product
+    @FormUrlEncoded
+    @POST("delete_product.php")
+    Call<Product> deleteProduct(
+            @Field(Constant.PRODUCT_ID) String productId
+    );
+
+
+    //for upload image and info
+    @Multipart
+    @POST("add_product.php")
+    Call<Product> addProduct(@Part MultipartBody.Part file,
+                             @Part(Constant.KEY_FILE) RequestBody name,
+                             @Part(Constant.PRODUCT_NAME) RequestBody productName,
+                             @Part(Constant.PRODUCT_CODE) RequestBody productCode,
+                             @Part(Constant.CATEGORY_ID) RequestBody categoryId,
+                             @Part(Constant.PRODUCT_DESCRIPTION) RequestBody description,
+                             @Part(Constant.PRODUCT_SELL_PRICE) RequestBody sellPrice,
+                             @Part(Constant.PRODUCT_WEIGHT) RequestBody weight,
+                             @Part(Constant.PRODUCT_WEIGHT_UNIT_ID) RequestBody weightUnitId,
+                             @Part(Constant.SUPPLIERS_ID) RequestBody supplierId,
+                             @Part(Constant.PRODUCT_STOCK) RequestBody stock,
+                             @Part(Constant.TAX) RequestBody tax,
+                             @Part(Constant.SP_SHOP_ID) RequestBody shopId,
+                             @Part(Constant.SP_OWNER_ID) RequestBody ownerId,
+                             @Part(Constant.PRODUCT_BUY_PRICE) RequestBody productBuyPrice);
+
+
+    //for upload image and info
+    @Multipart
+    @POST("update_product.php")
+    Call<Product> updateProduct(@Part MultipartBody.Part file,
+                                @Part(Constant.KEY_FILE) RequestBody name,
+                                @Part(Constant.PRODUCT_NAME) RequestBody productName,
+                                @Part(Constant.PRODUCT_CODE) RequestBody productCode,
+                                @Part(Constant.CATEGORY_ID) RequestBody categoryId,
+                                @Part(Constant.PRODUCT_DESCRIPTION) RequestBody description,
+                                @Part(Constant.PRODUCT_SELL_PRICE) RequestBody sellPrice,
+                                @Part(Constant.PRODUCT_WEIGHT) RequestBody weight,
+                                @Part(Constant.PRODUCT_WEIGHT_UNIT_ID) RequestBody weightUnitId,
+                                @Part(Constant.SUPPLIERS_ID) RequestBody supplierId,
+                                @Part(Constant.PRODUCT_STOCK) RequestBody stock,
+                                @Part(Constant.PRODUCT_ID) RequestBody product_id,
+                                @Part(Constant.TAX) RequestBody tax,
+                                @Part(Constant.PRODUCT_BUY_PRICE) RequestBody productBuyPrice
+
+    );
+    //for upload image and info
+    @Multipart
+    @POST("update_product_without_image.php")
+    Call<Product> updateProductWithoutImage(
+            @Part(Constant.PRODUCT_NAME) RequestBody productName,
+            @Part(Constant.PRODUCT_CODE) RequestBody productCode,
+            @Part(Constant.CATEGORY_ID) RequestBody categoryId,
+            @Part(Constant.PRODUCT_DESCRIPTION) RequestBody description,
+            @Part(Constant.PRODUCT_SELL_PRICE) RequestBody sellPrice,
+            @Part(Constant.PRODUCT_WEIGHT) RequestBody weight,
+            @Part(Constant.PRODUCT_WEIGHT_UNIT_ID) RequestBody weightUnitId,
+            @Part(Constant.SUPPLIERS_ID) RequestBody supplierId,
+            @Part(Constant.PRODUCT_STOCK) RequestBody stock,
+            @Part(Constant.PRODUCT_ID) RequestBody productId,
+            @Part(Constant.TAX) RequestBody tax,
+            @Part(Constant.PRODUCT_BUY_PRICE) RequestBody productBuyPrice
+
+
+    );
+
+
+
+
+
+
+}
