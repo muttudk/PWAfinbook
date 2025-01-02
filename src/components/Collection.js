@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './AccountList.css';
 import { useNavigate } from 'react-router-dom';
@@ -9,25 +9,17 @@ import useModal from '../utils/useModel';
 import { formatDate, getCurrentTimeFormatted } from '../utils/DateString';
 import Tosty from '../utils/Tosty';
 import { Post, updateVoucher } from '../api/FetchApi';
-import { userInfo } from '../context/userinfo';
-
 
 const Collection = () => {
   const [accounts, setAccounts] = useState([]);
   //const [options, setoptions] = useState([]);
   const [toastStatus, setToastStatus] = useState(null); 
   const [toastMessage, setToastMessage] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [searchText, setSearchText] = useState('');
-    const { isVisible, modalData, modalMode, openModal, closeModal } = useModal();
-  
-    const navigate = useNavigate();
-
-
-    
-    
-   
-
+  const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
+  const { isVisible, modalData, modalMode, openModal, closeModal,vtype } = useModal();
+  const navigate = useNavigate();
+  const userInfo = JSON.parse(localStorage.getItem('userinfo'));
 const data = {
         apikey: "getMemberacs",
         tokenkey: userInfo.token
@@ -75,14 +67,14 @@ const data = {
                     <strong>Type : </strong>{Accounts.account_type_code}<br />
                     <strong>Open Date : </strong>{Accounts.open_date}<br />
                     <strong>Maturity Date : </strong>{Accounts.maturity_date}<br />
-                    <strong>Balance :</strong>{Accounts.clbal}<br />
+                    <strong>Balance : </strong><strong>{Accounts.clbal}</strong><br />
                 </p>
             </div>
 
             <div className="card-footer">
-                <Button variant="outline-success" className="px-2 mx-3" onClick={() => openModal( Accounts , 'voucher')}>Receipt</Button> 
-                <Button disabled variant="outline-danger" className="px-2 mx-3" onClick={() => openModal( {Accounts} , 'voucher')}>Payment</Button> 
-                <Button variant="outline-info"  className="px-2 mx-3" onClick={() => handleLedgerClick(Accounts.unqid)} >Ledger</Button>
+                <Button variant="success" className="mx-2" onClick={() => openModal( Accounts , 'voucher','CRVCH')}><strong>Receipt</strong></Button> 
+                <Button variant="danger" className="mx-2" onClick={() => openModal( Accounts , 'voucher','DRVCH')}><strong>Payment</strong></Button> 
+                <Button variant="secondary"  className=" mx-2 text-white" onClick={() => handleLedgerClick(Accounts.unqid)} ><strong>Ledger</strong></Button>
             </div>
         </div>
     );
@@ -99,11 +91,11 @@ const data = {
         voucher_amount:formData.get('voucher_amount'),
         voucher_no: formData.get('voucher_no'),  
         voucher_note: formData.get('voucher_note'),
-       // voucher_time:getCurrentTimeFormatted(),  
+      
         voucher_othac_cd: "",
         voucher_ac_id:formData.get('voucher_ac_id'),
         voucher_date: formatDate(formData.get('voucher_date')), 
-       // shop_id:userInfo.shop_id,
+       
     };
    
     
@@ -112,23 +104,26 @@ const data = {
         tokenkey: userInfo.token,
         data:data1
       }
+      
       console.log(avoucher);
       
+     
       const Addvoucher = async () => {
         try {
           await updateVoucher(avoucher)
           .then((data) => {
-
+        
+      
             if (data.status === "success") {
                 fetchData();
-                setToastStatus(data.message); 
-                setToastMessage("Voucher added successfully!");
+                setToastStatus(data.status); 
+                setToastMessage(data.message);
                 closeModal();
             }
             else {
-                setToastStatus(data.message); 
+                setToastStatus(data.status); 
                 setToastMessage(data.message);
-                closeModal();
+             
             }
         })
         
@@ -137,45 +132,19 @@ const data = {
           setLoading(false);
         }
       };
-      Addvoucher();
-
-    // fetch(`https://finbook.softsolin.com/api/add_voucher.php?`, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded', // URL-encoded data
-    //     },
-    //     body: new URLSearchParams(data), // Converts formData to URL-encoded format
-    // })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-
-    //         if (data.value === "success") {
-    //             fetchData();
-    //             setToastStatus(data.value); 
-    //             setToastMessage("Voucher added successfully!");
-    //             closeModal();
-    //         }
-    //         else {
-    //             setToastStatus(data.value); 
-    //             setToastMessage("Transaction Failed...");
-    //             closeModal();
-    //         }
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error:', error);
-    //         closeModal();
-    //     });
+      Addvoucher();   
   };
   const clearToast = () => { 
     setToastStatus(null); 
     setToastMessage(''); };
-
     return (
 
         <>
             {loading ? (
-                <div className="loading-spinner">Loading...</div>
-            ) : (
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        ) : (
                 <div className='content'>
                     <header className='main-header px-3'>
                         <h4>Collection</h4>
@@ -208,6 +177,7 @@ const data = {
                         modalData={modalData}
                         modalMode={modalMode}
                         handleSubmit={handleSubmit}
+                        vtype={vtype}
                        // options={options}
                     />
                 </div>

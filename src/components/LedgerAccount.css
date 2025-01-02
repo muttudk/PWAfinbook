@@ -18,3 +18,15 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .ledger-table{
+    margin-top: 20px;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  
+  .ledger-body td{
+    text-wrap-mode: nowrap;
+  
+  }

@@ -3,6 +3,7 @@ import './Login.css'; // Optional: Add your styles here
 import fetchWithAuth from '../api/AuthUtil'; // Import the abstracted fetch function
 import { useNavigate } from 'react-router-dom';
 
+
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -41,7 +42,7 @@ const LoginPage = () => {
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
-        <h1>FinBook Login</h1>
+        <h1 >FinBook</h1>
         {error && <div className="error-message">{error}</div>}
 
         <div className="form-group">

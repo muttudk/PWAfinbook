@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './AccountList.css';
 import { useNavigate } from 'react-router-dom'
 import { Post } from '../api/FetchApi';
-import { userInfo } from '../context/userinfo';
+
 
 const AccountList = () => {
     const { customerId } = useParams();
     const [accounts, setAccounts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchText, setSearchText] = useState('');
-   
+    const userInfo = JSON.parse(localStorage.getItem('userinfo'));
     const navigate = useNavigate();
 
     const data = {
@@ -50,7 +50,7 @@ const AccountList = () => {
     const renderAccountsCard = (Accounts) => (
         <div className="card my-2 " key={Accounts.unqid}>
             <div className="card-header">
-                <div className="card-title ">
+                <div className="card-title">
                     <h5>{Accounts.account_type_name}</h5>
                 </div>
       
@@ -74,11 +74,13 @@ const AccountList = () => {
 
         <>
             {loading ? (
-                <div className="loading-spinner">Loading...</div>
-            ) : (
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        ): (
                 <div className='content'>
                     <header className='main-header px-3'>
-                        <h4>{ accounts.at(0).customer_name} Account's</h4>
+                        <h4>{(!accounts.length === 0)&&accounts.at(0).customer_name}Account's</h4>
                     </header>
                     <div className="input-group mb-2 px-4">
                         <input

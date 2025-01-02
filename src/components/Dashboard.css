@@ -1,9 +1,9 @@
 /* Dashboard.css */
 .dashboard-container {
     background-origin: padding-box;
-    padding: 5px;
-  }
-  
+
+    
+}
   .small-box {
     padding: 10px 5px;
     border-radius: 10px;
@@ -14,7 +14,7 @@
   }
   
   .accordion-button:not(.collapsed) {
-    background-color: seashell;
+    background-color: #F5F4B3;
   }
   
   .small-box:hover {
@@ -34,13 +34,13 @@
     animation: fadeIn 1s ease-in-out;
   }
   .small-box p {
-    color: #e8e8e8;
+    color: #000000;
     font-size: 20px;
     font-weight: 600;
-    color: #dfd9dc;
+  
   }
   .small-box h5{
-    color: rgb(255, 255, 255);
+    color: #000000;
     font-weight: 700;
   }
   
@@ -49,3 +49,4 @@
   0% { opacity: 0; transform: translateX(20px); } 
   100% { opacity: 1; transform: translateX(0); } 
 }
+

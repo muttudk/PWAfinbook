@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import {  Container, Button } from 'react-bootstrap';
+import {  Container, Button,Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Customers.css';
 import { useNavigate } from 'react-router-dom'
 import CustomerModal from '../utils/CustomerModel'; // Import the reusable modal component
 import { Post } from '../api/FetchApi';
-import { userInfo } from '../context/userinfo';
+
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [show, setShow] = useState(false);
+  const [loading, setloading] = useState(true);
   const [mode, setMode] = useState('create'); // create or edit
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
+  const userInfo = JSON.parse(localStorage.getItem('userinfo'));
 
   const [customerDetails, setCustomerDetails] = useState({
     customer_name: '',
@@ -31,10 +33,13 @@ const Customers = () => {
   }
   const fetchData = async () => {
     try {
+      setloading(true);
       const result = await Post(data);
       setCustomers(result);
+      setloading(false);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
+      setloading(false);
     }
   };
   useEffect(() => {
@@ -190,6 +195,8 @@ const Customers = () => {
   );
 
   return (
+
+
     <div className='content'>
       <header className='main-header px-3'>
         <h4>Customer's</h4>
@@ -211,10 +218,16 @@ const Customers = () => {
           <i className="fa-solid fa-arrows-rotate"></i>
         </Button>
       </div>
+      {loading ? (
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        ):(
       <Container className="accounts-container">
         {(!searchText ? customers : filteredCustomers).map(renderCustomerCard)}
       </Container>
-      
+      )
+      }
       <CustomerModal
         show={show}
         handleClose={handleClose}

@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './AccountList.css';
 import DynamicModal from '../utils/DynamicModel';
 import useModal from '../utils/useModel';
 import { Post } from '../api/FetchApi';
-import { userInfo } from '../context/userinfo';
+
 
 const Accounts = () => {
     const [accounts, setAccounts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchText, setSearchText] = useState('');
-
+    const userInfo = JSON.parse(localStorage.getItem('userinfo'));
     const { isVisible, modalData, modalMode, openModal, closeModal } = useModal();
 
-    
     const data = {
         apikey: "getMemberacs",
         tokenkey: userInfo.token
@@ -23,15 +22,17 @@ const Accounts = () => {
         try {
           const result = await Post(data);
           setAccounts(result.memberacs);
+          console.log(result.memberacs);
+          
           setLoading(false);
         } catch (error) {
           console.error('Error fetching dashboard data:', error);
           setLoading(false);
         }
       };
+
     useEffect(() => {
            fetchData();
-
     },[]);
 
     const filteredAccounts = accounts.filter(Accounts =>
@@ -66,7 +67,6 @@ const Accounts = () => {
     
     const handleSubmit = (e) => { 
         e.preventDefault(); 
-       
         closeModal(); 
       };
 
@@ -74,11 +74,13 @@ const Accounts = () => {
 
         <>
             {loading ? (
-                <div className="loading-spinner">Loading...</div>
-            ) : (
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        ) : (
                 <div className='content'>
                     <header className='main-header px-3'>
-                        <h4> Account's</h4>
+                        <h4>Account's</h4>
                     </header>
                     <div className="input-group mb-2 px-4">
                         <input
