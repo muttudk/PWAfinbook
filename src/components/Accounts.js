@@ -93,7 +93,7 @@ const Accounts = () => {
                             value={searchText}
                         />
 
-                        <Button variant="outline-secondary" id="add" disabled>
+                        <Button variant="outline-secondary" id="add">
                             <i className="fa-sharp fa-solid fa-user-plus"></i> Account
                         </Button>
 

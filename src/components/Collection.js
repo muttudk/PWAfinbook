@@ -86,18 +86,15 @@ const data = {
       const data1 = { 
         voucher_type :"4",
         voucher_id: null,
-        voucher_name:"CRVCH",
+        voucher_name:formData.get('voucher_name'),
         othac_code:formData.get('othac_code'),
         voucher_amount:formData.get('voucher_amount'),
         voucher_no: formData.get('voucher_no'),  
         voucher_note: formData.get('voucher_note'),
-      
         voucher_othac_cd: "",
         voucher_ac_id:formData.get('voucher_ac_id'),
         voucher_date: formatDate(formData.get('voucher_date')), 
-       
     };
-   
     
     const avoucher = {
         apikey: "updateVoucher",

@@ -89,11 +89,7 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
                 <Form.Group className="mb-3" hidden controlId="formVocheracid">
                   <Form.Label>voucher_ac_id</Form.Label>
                   <Form.Control type="text" name="voucher_ac_id" value={modalData.unqid} readOnly required />
-                </Form.Group>
-                {/* <Form.Group className="mb-3" hidden controlId="formvoucherdrorcr">
-                  <Form.Label>voucher_drorcr</Form.Label>
-                  <Form.Control type="number" name="voucher_drorcr"  defaultValue="1"/>
-                </Form.Group> */}
+                </Form.Group>            
                 <Form.Group className="mb-3" hidden controlId="formvouchername">
                   <Form.Control type="text" name="voucher_name" defaultValue={vtype} />
                 </Form.Group>

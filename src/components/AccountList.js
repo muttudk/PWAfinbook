@@ -93,8 +93,8 @@ const AccountList = () => {
                             value={searchText}
                         />
 
-                        <Button variant="outline-secondary" id="add" disabled>
-                            <i className="fa-sharp fa-solid fa-user-plus"></i> Account
+                        <Button variant="outline-secondary" id="add" >
+                            <i className="fa-sharp fa-solid fa-user-plus"></i> Account 
                         </Button>
 
                         <Button variant="outline-secondary" id="refresh" >
@@ -106,14 +106,7 @@ const AccountList = () => {
                         {(!searchText ? accounts : filteredAccounts).map(renderAccountsCard)}
                     </Container>
 
-                    {/* <CustomerModal
-                show={show}
-                handleClose={handleClose}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-                customerDetails={customerDetails}
-                mode={mode}
-            /> */}
+                    
                 </div>
             )}
 
