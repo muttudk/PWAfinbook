@@ -15,25 +15,24 @@ const AccountList = () => {
     const userInfo = JSON.parse(localStorage.getItem('userinfo'));
     const navigate = useNavigate();
 
-    const data = {
-            apikey: "getMemberacs",
-            tokenkey: userInfo.token,
-            cust_unqid : customerId
-          }
-          
-          const fetchData = async () => {
-            try {
-              const result = await Post(data);
-              setAccounts(result.memberacs);
-              setLoading(false);
-            } catch (error) {
-              console.error('Error fetching dashboard data:', error);
-              setLoading(false);
-            }
-          };
+    const fetchData = async () => {
+        setLoading(true);
+        let inputdata = { apikey: "getMemberacs", tokenkey: userInfo.token };
+        if (customerId) {
+            inputdata = { ...inputdata, cust_unqid: customerId };
+        }
+        try {
+            const result = await Post(inputdata);
+            setAccounts(result.memberacs);
+        } catch (error) {
+            console.error('Error fetching dashboard data:', error);
+        } finally {
+            setLoading(false);
+
+        }
+    };
     useEffect(() => {
-       
-            fetchData();
+        fetchData()
     }, [customerId]);
 
     const filteredAccounts = accounts.filter(Accounts =>
@@ -42,10 +41,9 @@ const AccountList = () => {
     );
     const searchHandler = (e) => {
         setSearchText(e.target.value);
-      };
-      
-      const handleLedgerClick = (accountId) => 
-        { navigate(`/home/ledger/${accountId}`); };
+    };
+
+    const handleLedgerClick = (accountId) => { navigate(`/home/ledger/${accountId}`); };
 
     const renderAccountsCard = (Accounts) => (
         <div className="card my-2 " key={Accounts.unqid}>
@@ -53,7 +51,7 @@ const AccountList = () => {
                 <div className="card-title">
                     <h5>{Accounts.account_type_name}</h5>
                 </div>
-      
+
             </div>
             <div className="card-body">
                 <p className="card-text">
@@ -65,7 +63,7 @@ const AccountList = () => {
                 </p>
             </div>
             <div className="card-footer">
-                <button onClick={() => handleLedgerClick(Accounts.unqid)}  className="btn btn-primary ledger-btn">Ledger</button>
+                <button onClick={() => handleLedgerClick(Accounts.unqid)} className="btn btn-primary ledger-btn">Ledger</button>
             </div>
         </div>
     );
@@ -74,13 +72,13 @@ const AccountList = () => {
 
         <>
             {loading ? (
-          <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        ): (
+                <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </Spinner>
+            ) : (
                 <div className='content'>
                     <header className='main-header px-3'>
-                        <h4>{(!accounts.length === 0)&&accounts.at(0).customer_name}Account's</h4>
+                        <h4>{(!accounts.length === 0) && accounts.at(0).customer_name}Account's</h4>
                     </header>
                     <div className="input-group mb-2 px-4">
                         <input
@@ -94,11 +92,11 @@ const AccountList = () => {
                         />
 
                         <Button variant="outline-secondary" id="add" >
-                            <i className="fa-sharp fa-solid fa-user-plus"></i> Account 
+                            <i className="fa-sharp fa-solid fa-user-plus"></i> Account
                         </Button>
 
                         <Button variant="outline-secondary" id="refresh" >
-                            <i className="fa-solid fa-arrows-rotate"></i> 
+                            <i className="fa-solid fa-arrows-rotate"></i>
                         </Button>
 
                     </div>
@@ -106,7 +104,7 @@ const AccountList = () => {
                         {(!searchText ? accounts : filteredAccounts).map(renderAccountsCard)}
                     </Container>
 
-                    
+
                 </div>
             )}
 

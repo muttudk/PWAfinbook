@@ -42,6 +42,10 @@ const LoginPage = () => {
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
+        <div className="logo-container">
+        <img src="logo192.png" alt="logo" />
+        </div>
+        
         <h1 >FinBook</h1>
         {error && <div className="error-message">{error}</div>}
 

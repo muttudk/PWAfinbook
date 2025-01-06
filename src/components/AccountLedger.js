@@ -9,6 +9,7 @@ import { Post } from '../api/FetchApi';
 import { formatDate, getCurrentTimeFormatted } from '../utils/DateString';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import AccountRegForm from '../utils/AccountRegForm';
 
 const LedgerAccount = () => {
   const { accountId } = useParams();
@@ -98,10 +99,12 @@ const LedgerAccount = () => {
       <div className='ledger-header'>
         <h2>Ledger</h2>
         <div className='header-btns'>
-          <Button variant="px-4 mx-2 text-black" onClick={() => openModal({}, 'filter')}><i className="fa-regular fa-calendar-check text-black"></i> Filter</Button>
+        
+          <Button variant="px-4 mx-2 text-black" onClick={() => openModal({},'filter')}><i className="fa-regular fa-calendar-check text-black"></i> Filter</Button>
           <Button variant="px-4 mx-2 text-black" onClick={() => printorsave("print")}><i className="fa-solid fa-print text-black"></i> Print</Button>
           <Button variant="px-4 mx-2 text-black" onClick={() => printorsave("download")}><i className="fa-solid fa-download text-black"></i></Button>
         </div>
+
       </div>
       <div>
         <h6>Account Code  : {ledgerhead.ac_code}</h6>
@@ -149,6 +152,7 @@ const LedgerAccount = () => {
         modalMode={modalMode}
         handleSubmit={handleSubmit}
       />
+      
     </Container>
   );
 };

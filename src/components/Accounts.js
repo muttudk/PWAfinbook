@@ -5,7 +5,7 @@ import './AccountList.css';
 import DynamicModal from '../utils/DynamicModel';
 import useModal from '../utils/useModel';
 import { Post } from '../api/FetchApi';
-
+import AccountRegForm from '../utils/AccountRegForm';
 
 const Accounts = () => {
     const [accounts, setAccounts] = useState([]);
@@ -17,23 +17,22 @@ const Accounts = () => {
     const data = {
         apikey: "getMemberacs",
         tokenkey: userInfo.token
-      }
-      const fetchData = async () => {
+    }
+    const fetchData = async () => {
+        setLoading(true);
         try {
-          const result = await Post(data);
-          setAccounts(result.memberacs);
-          console.log(result.memberacs);
-          
-          setLoading(false);
+            const result = await Post(data);
+            setAccounts(result.memberacs);
+            setLoading(false);
         } catch (error) {
-          console.error('Error fetching dashboard data:', error);
-          setLoading(false);
+            console.error('Error fetching dashboard data:', error);
+            setLoading(false);
         }
-      };
+    };
 
     useEffect(() => {
-           fetchData();
-    },[]);
+        fetchData();
+    }, []);
 
     const filteredAccounts = accounts.filter(Accounts =>
         Accounts.account_type_name.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -64,20 +63,20 @@ const Accounts = () => {
 
         </div>
     );
-    
-    const handleSubmit = (e) => { 
-        e.preventDefault(); 
-        closeModal(); 
-      };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        closeModal();
+    };
 
     return (
 
         <>
             {loading ? (
-          <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        ) : (
+                <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </Spinner>
+            ) : (
                 <div className='content'>
                     <header className='main-header px-3'>
                         <h4>Account's</h4>
@@ -93,7 +92,7 @@ const Accounts = () => {
                             value={searchText}
                         />
 
-                        <Button variant="outline-secondary" id="add">
+                        <Button variant="outline-secondary" id="add" onClick={() => openModal({},"SBAC")}>
                             <i className="fa-sharp fa-solid fa-user-plus"></i> Account
                         </Button>
 
@@ -106,7 +105,14 @@ const Accounts = () => {
                         {(!searchText ? accounts : filteredAccounts).map(renderAccountsCard)}
                     </Container>
 
-                    <DynamicModal isVisible={isVisible}
+                    {/* <DynamicModal isVisible={isVisible}
+                        handleClose={closeModal}
+                        modalData={modalData}
+                        modalMode={modalMode}
+                        handleSubmit={handleSubmit}
+                    /> */}
+                    <AccountRegForm
+                        isVisible={isVisible}
                         handleClose={closeModal}
                         modalData={modalData}
                         modalMode={modalMode}

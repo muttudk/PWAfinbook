@@ -13,6 +13,60 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
     apikey: "getpopLdgmast",
     tokenkey: userInfo.token,
   }
+
+  const formType ='SBAC';
+  
+  const GenarateForm = {
+    PLAC : {
+      date : true,
+      acno : true,
+      custspinner : true,
+      Roi : true,
+      RoiType : true,
+      Duration : true,
+      DurationType : true,
+      MaturityDate : true,
+      EmiType : true,
+      Note : true,  
+    },
+    SBAC : {
+      date : true,
+      acno : true,
+      custspinner : true,
+      Roi : true,
+      RoiType : true,
+      Duration : false,
+      DurationType : false,
+      MaturityDate : false,
+      EmiType : false,
+      Note : true,  
+    },
+    SHAC : {
+      date : true,
+      acno : true,
+      custspinner : true,
+      Roi : true,
+      RoiType : true,
+      Duration : false,
+      DurationType : false,
+      MaturityDate : false,
+      EmiType : false,
+      Note : true,  
+    },
+    PGAC:{
+      date : true,
+      acno : true,
+      custspinner : true,
+      Roi : true,
+      RoiType : true,
+      Duration : true,
+      DurationType : true,
+      MaturityDate : true,
+      EmiType : true,
+      Note : true,  
+    }
+  }
+
   const fetchData = async () => {
     try {
       const result = await Post(data);
@@ -35,8 +89,8 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
 
   return (
     <Modal show={isVisible} onHide={handleClose}>
-      <Modal.Header closeButton className={vtype === 'CRVCH' ? "bg-success" : "bg-danger"}>
-        <Modal.Title className='text-white' >{modalMode === 'voucher' ? vtype === 'CRVCH' ? "Recipt Voucher" : 'Payment Voucher' : 'Filter'}</Modal.Title>
+      <Modal.Header closeButton className={vtype&&vtype === 'CRVCH' ? "bg-success" : "bg-danger"}>
+        <Modal.Title className='text-white' >{modalMode === 'voucher' ? vtype === 'CRVCH' ? "Recipt Voucher" : 'Payment Voucher' : `Create ${formType}`}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {loading ? (
@@ -98,13 +152,6 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
             {modalMode === 'filter' && (
               <>
                 <Form.Group className="mb-3" controlId="formAccount">
-                  {/* <Form.Label>Account</Form.Label>
-                  <Form.Control as="select" name="account" >
-                    <option value="">Select Account</option>
-                    {options.map(account => (
-                      <option key={account.code} value={account.name}>{account.name}_{account.grpname}</option>
-                    ))}
-                  </Form.Control> */}
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formFromDate">
                   <Form.Label>From Date</Form.Label>
@@ -115,6 +162,89 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
                   <Form.Control type="date" name="toDate" />
                 </Form.Group>
               </>
+            )}
+              {modalMode === 'Account' && (
+              <>
+              {GenarateForm[formType].date && (
+                <Form.Group className="mb-3" controlId="formDate">
+                <Form.Label>Date</Form.Label>
+                <Form.Control type="date" name="Date" />
+              </Form.Group>
+              )}
+                {GenarateForm[formType].acno && (
+                <Form.Group className="mb-3" controlId="formAcno">
+                <Form.Label>Account No</Form.Label>
+                <Form.Control type="text" name="Accountno" readOnly disabled />
+              </Form.Group>
+              )}
+                   {GenarateForm[formType].custspinner && (
+                 <Form.Group className="mb-3" controlId="formCustomer">
+                 <Form.Label>Customer</Form.Label>
+                    <Form.Control as="select" name="Customer" required >
+                     <option value="" >Select</option>
+                     <option value="001" >pavan</option>
+                     <option value="002" >siddu</option>
+                     <option value="003" >kavan</option>
+                   </Form.Control>
+                 
+               </Form.Group>
+              )}
+               {GenarateForm[formType].Roi && (
+                <Form.Group className="mb-3" controlId="formRoi">
+                <Form.Label>Rate Of interest %</Form.Label>
+                <Form.Control type="number" name="Roi"   />
+              </Form.Group>
+              )}
+               {GenarateForm[formType].RoiType && (
+                <Form.Group className="mb-3" controlId="formRoiType">
+                <Form.Label>Rate Of interest Type</Form.Label>
+                <Form.Control as="select" name="RoiType" required >
+                     <option value="year" >Yearly</option>
+                     <option value="Month" >Monthly</option>  
+                   </Form.Control>
+              </Form.Group>
+              )}
+               {GenarateForm[formType].Duration && (
+                <Form.Group className="mb-3" controlId="formDuration">
+                <Form.Label>Duration</Form.Label>
+                <Form.Control type="number" name="Duration"   />
+              </Form.Group>
+              )}
+               {GenarateForm[formType].DurationType && (
+                <Form.Group className="mb-3" controlId="formDurationType">
+                <Form.Label>Duration Type</Form.Label>
+                <Form.Control as="select" name="DurationType" required >
+                     <option value="Days" >Day's</option>
+                     <option value="Weeks" >Week's</option>
+                     <option value="Month" >Month's</option>
+                    
+                   </Form.Control>
+              </Form.Group>
+              )}
+                {GenarateForm[formType].MaturityDate && (
+                <Form.Group className="mb-3" controlId="formMaturityDate">
+                <Form.Label>Maturity Date</Form.Label>
+                <Form.Control type="date" name="MaturityDate" />
+              </Form.Group>
+              )}
+              {GenarateForm[formType].EmiType && (
+                <Form.Group className="mb-3" controlId="formMaturityDate">
+                <Form.Label>EMI Type</Form.Label>
+                <Form.Control as="select" name="DurationType" required >
+                     <option value="Days" >Daily</option>
+                     <option value="Weeks" >Weekly</option>
+                     <option value="Month" >Monthly</option>
+                    
+                   </Form.Control>
+              </Form.Group>
+              )}
+               {GenarateForm[formType].Note && (
+                <Form.Group className="mb-3" controlId="formNote">
+                <Form.Label>Note</Form.Label>
+                <Form.Control type="text" name="Note" />
+              </Form.Group>
+              )}
+              </>   
             )}
             <Modal.Footer>
               <Button variant="primary" onClick={handleClose}>Close</Button>
