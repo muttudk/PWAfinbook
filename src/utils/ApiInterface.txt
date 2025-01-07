@@ -461,7 +461,44 @@ public interface ApiInterface {
 
 
 
+//* create account new api
+{
+    "apikey": "updateCustacmast",
+    "token": "5ece4797eaf5e44779648-b6d1-11ef-bf55-f4393e8d0a8a",
+    "data": {
+        "account_id": null,
+        "unqid": "",
+        "customer_unqid": "5914c9a7-b5d6-11ef-9eea-bc0e0f24873b",
+        "actype_unqid": "dbf88119-b5e7-11ef-9eea-bc0e0f24873b",
+        "ac_code": "",
+        "customer_name": "Revanasiddayya Kantikarmath",
+        "open_date": "06-01-2025",
+        "rateofins": "6",
+        "roitype": "0",
+        "maturity_date": null,
+        "remarks": ""
+    }
+}
 
-
-
+}
+//* PLAC account
+{
+    "apikey": "updateCustacmast",
+    "token": "5ece4797eaf5e44779648-b6d1-11ef-bf55-f4393e8d0a8a",
+    "data": {
+        "account_id": null,
+        "unqid": "",
+        "customer_unqid": "5914c9a7-b5d6-11ef-9eea-bc0e0f24873b",
+        "actype_unqid": "dbf881d7-b5e7-11ef-9eea-bc0e0f24873b",
+        "ac_code": "",
+        "customer_name": "Revanasiddayya Kantikarmath",
+        "open_date": "06-01-2025",
+        "rateofins": "2",
+        "roitype": "1",
+        "no_of_emi": "100",
+        "periodtyp": "0",
+        "maturity_date": null,
+        "emimode": "2",
+        "remarks": "ok"
+    }
 }

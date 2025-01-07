@@ -212,7 +212,7 @@ const Customers = () => {
           value={searchText}
         />
         <Button variant="outline-secondary" id="add" onClick={() => handleShow('create')}>
-          <i className="fa-sharp fa-solid fa-user-plus"></i> Add
+          <i className="fa-sharp fa-solid fa-user-plus"></i> New Customer
         </Button>
         <Button variant="outline-secondary" id="refresh" onClick={refreshHandler}>
           <i className="fa-solid fa-arrows-rotate"></i>

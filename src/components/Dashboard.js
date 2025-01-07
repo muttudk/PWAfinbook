@@ -32,8 +32,23 @@ const Dashboard = () => {
       console.error('Error fetching dashboard data:', error);
     }
   };
+  const fetchAcgrp = async () => {
+    const data = {
+      apikey: "getMemberacgrp",
+      tokenkey: userInfo.token,
+    }
+    try {
+      const result = await Post(data);
+      console.log("memberacgrp successfully fetched", );
+      localStorage.setItem('acgrptype', JSON.stringify(result.memberacgrp));
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+    }
+  };
   useEffect(() => {
     fetchData();
+    fetchAcgrp();
   }, []);
 
   return (

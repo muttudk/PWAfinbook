@@ -9,6 +9,7 @@ import useModal from '../utils/useModel';
 import { formatDate, getCurrentTimeFormatted } from '../utils/DateString';
 import Tosty from '../utils/Tosty';
 import { Post, updateVoucher } from '../api/FetchApi';
+import AccountRegForm from '../utils/AccountRegForm';
 
 const Collection = () => {
   const [accounts, setAccounts] = useState([]);
@@ -17,6 +18,7 @@ const Collection = () => {
   const [toastMessage, setToastMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
+  const [accountModalVisible, setAccountModalVisible] = useState(false);
   const { isVisible, modalData, modalMode, openModal, closeModal,vtype } = useModal();
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem('userinfo'));
@@ -39,6 +41,8 @@ const data = {
          fetchData();
        
     },[]);
+    const openAccountModal = () => { setAccountModalVisible(true); }; 
+    const closeAccountModal = () => { setAccountModalVisible(false);  };
     
    
     const filteredAccounts = accounts.filter(Accounts =>
@@ -102,7 +106,7 @@ const data = {
         data:data1
       }
       
-      console.log(avoucher);
+     // console.log(avoucher);
       
      
       const Addvoucher = async () => {
@@ -131,6 +135,20 @@ const data = {
       };
       Addvoucher();   
   };
+
+  const showtoast = (data) => {
+    if (data.status === "success") {
+      fetchData();
+      setToastStatus(data.status); 
+      setToastMessage(data.message); 
+  }
+  else {
+      setToastStatus(data.status); 
+      setToastMessage(data.message);
+  }
+   }
+
+
   const clearToast = () => { 
     setToastStatus(null); 
     setToastMessage(''); };
@@ -144,7 +162,7 @@ const data = {
         ) : (
                 <div className='content'>
                     <header className='main-header px-3'>
-                        <h4>Collection</h4>
+                        <h4>Account's</h4>
                     </header>
                     <div className="input-group mb-2 px-4">
                         <input
@@ -157,8 +175,8 @@ const data = {
                             value={searchText}
                         />
 
-                        <Button variant="outline-secondary" id="add" disabled>
-                            <i className="fa-sharp fa-solid fa-user-plus"></i> Account
+                        <Button variant="outline-secondary" id="add" onClick={openAccountModal}>
+                            <i className="fa-sharp fa-solid fa-user-plus"></i> New Account
                         </Button>
 
                         <Button variant="outline-secondary" id="refresh" onClick={()=>(fetchData())}> 
@@ -169,6 +187,8 @@ const data = {
                     <Container className="accounts-container">
                         {(!searchText ? accounts : filteredAccounts).map(renderAccountsCard)}
                     </Container>
+
+
                     <DynamicModal isVisible={isVisible}
                         handleClose={closeModal}
                         modalData={modalData}
@@ -176,6 +196,12 @@ const data = {
                         handleSubmit={handleSubmit}
                         vtype={vtype}
                        // options={options}
+                    />
+                    <AccountRegForm 
+                    isVisible={accountModalVisible} 
+                    handleClose={closeAccountModal}
+                    modalMode="SBAC"
+                    showtoast={showtoast}
                     />
                 </div>
                 

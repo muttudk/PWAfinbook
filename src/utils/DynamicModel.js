@@ -8,7 +8,7 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
   const [loading, setLoading] = useState(true);
   const userInfo = JSON.parse(localStorage.getItem('userinfo'));
   const [usertype, setusertype] = useState(null);
-
+ const [today, setToday] = useState('');
   const data = {
     apikey: "getpopLdgmast",
     tokenkey: userInfo.token,
@@ -81,6 +81,8 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
   useEffect(() => {
     userInfo && setusertype(userInfo.user_type);
     if (isVisible) {
+      const currentDate = new Date().toISOString().split('T')[0]; 
+      setToday(currentDate);
       fetchData();
     }
   }, [isVisible]);
@@ -88,7 +90,7 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
   if (!isVisible) return null;
 
   return (
-    <Modal show={isVisible} onHide={handleClose}>
+    <Modal show={isVisible} onHide={handleClose} backdrop="static" keyboard={false}>
       <Modal.Header closeButton className={vtype&&vtype === 'CRVCH' ? "bg-success" : "bg-danger"}>
         <Modal.Title className='text-white' >{modalMode === 'voucher' ? vtype === 'CRVCH' ? "Recipt Voucher" : 'Payment Voucher' : `Create ${formType}`}</Modal.Title>
       </Modal.Header>
@@ -103,7 +105,7 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
               <>
                 <Form.Group className="mb-3" controlId="formVoucherDate">
                   <Form.Label>Voucher Date</Form.Label>
-                  <Form.Control type="date" name="voucher_date" required />
+                  <Form.Control type="date" name="voucher_date" required defaultValue={today}/>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formRefNo">
                   <Form.Label>Ref No</Form.Label>
@@ -119,7 +121,6 @@ const DynamicModal = ({ isVisible, handleClose, modalData, modalMode, handleSubm
                         <option key={account.code} value={account.name}>{account.name}_{account.grpname}</option>
                       ))}
                     </Form.Control>
-
                   }
                   {
                     usertype === 'agent' && <Form.Control as="select" name="othac_code" required >

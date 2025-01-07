@@ -43,10 +43,10 @@ const LoginPage = () => {
     <div className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
         <div className="logo-container">
-        <img src="logo192.png" alt="logo" />
+        <img src="logo512.png" alt="logo" width="180px" height="180px"/>
         </div>
         
-        <h1 >FinBook</h1>
+        <h1 className='text-black'>FinBook</h1>
         {error && <div className="error-message">{error}</div>}
 
         <div className="form-group">
@@ -78,7 +78,7 @@ const LoginPage = () => {
         </button>
 
         <div className="additional-links">
-          <a href="/forgot-password">Forgot Password?</a>
+          <a href="/"><strong>Forgot Password?</strong></a>
           {/* <a href="/register">Sign Up</a> */}
         </div>
       </form>

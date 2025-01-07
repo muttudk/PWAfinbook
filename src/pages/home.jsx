@@ -40,10 +40,10 @@ const Home = () => {
       <nav className="nav flex-column"> 
         <NavLink to="/home/dashboard" className="nav-link"  activeclass="active"><i className="fas fa-chart-line px-3 "></i>Dashboard</NavLink> 
         <NavLink to="/home/customers" className="nav-link"  activeclass="active"><i className="fas fa-users px-3"></i> Customers</NavLink> 
-        <NavLink to="/home/accounts" className="nav-link"  activeclass="active"><i className="fas fa-money-check px-3"></i> Accounts</NavLink> 
-        <NavLink to="/home/collection" className="nav-link" activeclass="active"><i className="fas fa-coins px-3"></i> Collection</NavLink> 
-        <NavLink to="/home/settings" className="nav-link"  activeclass="active"><i className="fas fa-cog px-3"></i> Settings</NavLink> 
-        <NavLink to="/home/reports" className="nav-link"  activeclass="active"><i className="fas fa-file-contract px-3"></i> Reports</NavLink> 
+        {/* <NavLink to="/home/accounts" className="nav-link"  activeclass="active"><i className="fas fa-money-check px-3"></i> Accounts</NavLink>  */}
+        <NavLink to="/home/collection" className="nav-link" activeclass="active"><i className="fas fa-coins px-3"></i> Account's</NavLink> 
+        {/* <NavLink to="/home/settings" className="nav-link"  activeclass="active"><i className="fas fa-cog px-3"></i> Settings</NavLink> 
+        <NavLink to="/home/reports" className="nav-link"  activeclass="active"><i className="fas fa-file-contract px-3"></i> Reports</NavLink>  */}
         <button onClick={handleLogout} className="logout-button"><i className="fas fa-sign-out-alt"></i> Logout</button> 
         </nav>
       </aside>
@@ -56,10 +56,10 @@ const Home = () => {
                 <i className="fas fa-users"></i>
                 <span>Customers</span>
               </NavLink>
-              <NavLink to="/home/accounts" className="nav-link">
+              {/* <NavLink to="/home/accounts" className="nav-link">
                 <i className="fas fa-money-check"></i>
                 <span>Accounts</span>
-              </NavLink>
+              </NavLink> */}
               <NavLink to="/home/collection" className="nav-link">
                 <i className="fas fa-cog"></i>
                 <span>Collections</span>
